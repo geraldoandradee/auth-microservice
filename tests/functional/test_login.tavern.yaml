@@ -1,0 +1,14 @@
+#test_name: Get auth data
+#
+#stages:
+#  - name: Get Token
+#    request:
+#      url: http://localhost:8888/v1/auth
+#      method: POST
+#      json:
+#        username: "geraldo@geraldoandrade.com"
+#        password: "123456"
+#      headers:
+#        content-type: application/json
+#    response:
+#      status_code: 200
