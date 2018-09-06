@@ -7,8 +7,10 @@ from servers.oauth2.models import User
 
 class BaseViewHandler(MethodView):
 
-    def current_user(self):
+    @staticmethod
+    def current_user():
         if 'id' in session:
             uid = session['id']
             return User.query.get(uid)
         return None
+
