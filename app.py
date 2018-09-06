@@ -1,18 +1,31 @@
+# -*- coding: utf-8 -*-
 import os
 
-from website.app import create_app
+import click
+from flask import Flask
+from flask.cli import AppGroup
 
-app = create_app()
-
-
-@app.cli.command()
-def initdb():
-    from website.models import db
-    db.create_all()
+import constants
 
 
-@app.cli.command()
-def init_db():
-    from servers.oauth2.respository import Base, engine
-    from servers.oauth2.models import *
-    Base.metadata.create_all(bind=engine)
+app = Flask(__name__)
+
+
+if os.getenv('SERVER_OPERATION_MODE') == constants.SERVER_OAUTH_OPERATION_MODE:
+    from servers.oauth2.server import oauth2_server
+    app.register_blueprint(oauth2_server)
+else:
+    raise Exception("SERVER_OPERATION_MODE env var is not setted correctly.")
+
+user_cli = AppGroup('db')
+
+
+@user_cli.command('init')
+@click.argument('dbname')
+def init_db(dbname):
+    if dbname == constants.SERVER_OAUTH_OPERATION_MODE:
+        from servers.oauth2.respository import Base, engine
+        from servers.oauth2.models import User, Token, Grant, Client
+        Base.metadata.create_all(bind=engine)
+    else:
+        raise Exception("Server Operation Mode not known.")
