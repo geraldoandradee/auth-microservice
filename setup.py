@@ -8,5 +8,5 @@ setup(
     license='MIT',
     author='Geraldo Andrade',
     author_email='geraldo@geraldoandrade.com',
-    description='This is a simple microservice.', install_requires=['werkzeug', 'flask']
+    description='This is a simple microservice.', install_requires=['werkzeug', 'flask', 'sqlalchemy', 'click']
 )
