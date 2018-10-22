@@ -4,16 +4,18 @@ import os
 import click
 from flask import Flask
 from flask.cli import AppGroup
+from servers.oauth2.config import configure as configure_oauth2
 
 import constants
 
-
 app = Flask(__name__)
-
 
 if os.getenv('SERVER_OPERATION_MODE') == constants.SERVER_OAUTH_OPERATION_MODE:
     from servers.oauth2.server import oauth2_server
+
+    configure_oauth2(app=app)
     app.register_blueprint(oauth2_server)
+
 else:
     raise Exception("SERVER_OPERATION_MODE env var is not setted correctly.")
 
