@@ -6,7 +6,7 @@ def setup_routes(app, oauth):
     app.add_url_rule('/', view_func=HomeHandler.as_view('home'))
     app.add_url_rule('/client', view_func=ClientHandler.as_view('client'))
     app.add_url_rule('/api/me', view_func=MeHandler.as_view('me'))
-    app.add_url_rule('/oauth/authorize', view_func=AuthorizeHandler.as_view('oauth.authorize'))
+    app.add_url_rule('/oauth/authorize', view_func=AuthorizeHandler.as_view('oauth_authorize'))
     handler = OAuth2Handler()
     oauth.clientgetter(handler.load_client)
     oauth.grantgetter(handler.load_grant)
